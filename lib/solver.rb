@@ -11,34 +11,45 @@ class Solver
   end
 
   def solve
-    changed_something = false
-    until found_solution
-      if current_spot_solved?
-        set_spot_value
-        changed_something = false
-        @current_spot = my_board.next_spot(current_spot)
-      elsif changed_something
-        @current_spot = my_board.next_spot(current_spot)
-        changed_something = false
-      else
-          eliminate_possibilities
-          changed_something = true
-      end
+    tries = 0
+    until found_solution || tries == 1_000
+      next_spot
+      run
+      tries += 1
     end
     board
   end
 
+  def next_spot
+    @current_spot = my_board.next_spot(current_spot)
+  end
+
+  def run
+    if current_spot.value == 0
+      eliminate_possibilities
+    end
+    if current_spot_solved?
+      set_spot_value
+    else
+      false
+    end
+  end
+
   def eliminate_possibilities
-      possible_count = current_spot.possibilities.count
-      not_possibles = row_values(current_spot.row)
-      not_possibles += column_values(current_spot.column)
-      not_possibles += square_values(current_spot.square)
-      @current_spot.possibilities -= not_possibles
+     not_possibles = row_values(current_spot.row)
+     not_possibles += column_values(current_spot.column)
+     not_possibles += square_values(current_spot.square)
+     @current_spot.possibilities -= not_possibles
   end
 
   def current_spot_solved?
-     true if current_spot.possibilities.size == 1
+     if current_spot.possibilities.size == 1
+       true
+     else
+       false
+     end
   end
+
 
   def found_solution
     values = []
@@ -70,7 +81,6 @@ class Solver
     values = []
     while row <= 8
       while column <= 8
-
         if spot(row, column).square == square
           values << spot(row, column).value unless spot(row, column).value == 0
         end
@@ -87,7 +97,7 @@ class Solver
   end
 
   def set_spot_value
-    @current_spot.value = current_spot.possibilities[0]
+   true if @current_spot.value = current_spot.possibilities[0]
   end
 
 end
