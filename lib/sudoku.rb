@@ -1,28 +1,27 @@
 require "./lib/solver"
 class Sudoku
-  def initialize
-    solve_puzzle
-  end
 
   def solve_puzzle
     file_name = ARGV[0]
-    puts "hello"
-    raw_puzzle = File.read(file_name)
-    puzzle = format_puzzle(raw_puzzle)
+    puzzle_lines = File.readlines(file_name)
+    puzzle = format_puzzle(puzzle_lines)
     solver = Solver.new(puzzle)
-    puts puzzle
-    solution = solver.solve
+    raw_solution = solver.solve
+    solution = format_solution(raw_solution)
     puts solution
   end
 
-  def format_puzzle(puzzle)
-    rows = puzzle.split("\n")
-    rows.map { |row| row.split("") }
+  def format_puzzle(puzzle_lines)
+    puzzle_lines.map do |row|
+      elements = row.chars
+      elements.map { |element| element.to_i }
+    end
+  end
+
+  def format_solution(raw_solution)
+    raw_solution.map { |row| row.map { |element| element.value.to_s }.join}
   end
 end
-s = Sudoku
-#filename = ARGV[0]
-#puzzle = File.read(filename)
-#solver = Solver.new
-#solution = solver.solve(puzzle)
-#puts solution
+s = Sudoku.new
+s.solve_puzzle
+
