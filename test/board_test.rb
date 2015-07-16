@@ -1,6 +1,7 @@
 require_relative '../lib/board'
 
 class BoardTest < Minitest::Test
+
   def test_the_board_has_spots_in_it
     input = [[8,2,6,5,9,4,3,1,7],
       [7,1,5,6,3,8,9,4,2],
@@ -78,11 +79,11 @@ class BoardTest < Minitest::Test
               [6,7,9,3,8,5,4,2,0]]
     my_board = Board.new(input)
     initial_spot = my_board.board[0][0]
-    next_spot = my_board.next_spot(initial_spot)
+    spot = my_board.next_spot(initial_spot)
 
 
-    assert_equal 8, next_spot.column
-    assert_equal 8, next_spot.row
+    assert_equal 8, spot.column
+    assert_equal 8, spot.row
   end
 
   def test_it_finds_the_next_spot_when_we_have_two_options

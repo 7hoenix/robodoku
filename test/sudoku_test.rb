@@ -14,8 +14,8 @@ class SudokuTest < Minitest::Test
             " 3 9 2 8 \n" +
             "  2 7 5  \n" +
             "6  3 5  1\n"
-    solver = Solver.new
-    solution = solver.solve(input)
+    solver = Solver.new(input)
+    solution = solver.solve
     output =  "826594317\n" +
               "715638942\n" +
               "394721865\n" +

@@ -22,4 +22,15 @@ class SpotTest < Minitest::Test
     spot = Spot.new(0, 0, 0)
     assert_equal 9, spot.possibilities.size
   end
+
+  def test_it_knows_its_square_on_the_board
+    spot = Spot.new(9, 0, 0)
+    assert_equal 0, spot.square
+  end
+
+  def test_it_knows_its_square_on_the_board
+    spot = Spot.new(3, 4, 5)
+    assert_equal 4, spot.square
+  end
+
 end

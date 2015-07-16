@@ -20,20 +20,23 @@ class Board
   end
 
   def next_spot(current_spot)
+    check_spot = current_spot
       check_row = current_spot.row
       check_column = current_spot.column
-
     until current_spot.value == 0 || check_row > 8
+
         spot = get_spot(check_row, check_column)
       if spot.column < 8
-        return current_spot = spot if spot.value == 0
         check_column += 1
-      else
         return current_spot = spot if spot.value == 0
+      else
         check_column = 0
         check_row += 1
+        return current_spot = spot if spot.value == 0
       end
+
     end
+    current_spot
   end
 
   def get_spot(row, column)
